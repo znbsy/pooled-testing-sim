@@ -30,4 +30,9 @@ class Protocol:
         # while minimizing the number of calls to sample.query
         #
         # Not correctly identifying the set of positive samples results in disqualification!
+        #
+        # The input will be a TestSample object, which allows you to query
+        # a subset of 0 ... n-1
+        #
+        # sample.query([1, 3, 4]) will return True if any of 1, 3, or 4 are positive
         return {i for i in range(self.n) if sample.query(set([i]))}
