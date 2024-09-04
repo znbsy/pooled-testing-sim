@@ -35,4 +35,23 @@ class Protocol:
         # a subset of 0 ... n-1
         #
         # sample.query([1, 3, 4]) will return True if any of 1, 3, or 4 are positive
-        return {i for i in range(self.n) if sample.query(set([i]))}
+        # return {i for i in range(self.n) if sample.query(set([i]))}
+        
+        def find_positives(indices):
+            if len(indices) == 1:
+                return set(indices) if sample.query(indices) else set()
+            
+            mid = len(indices) // 2
+            left_indices = indices[:mid]
+            right_indices = indices[mid:]
+            
+            result = set()
+            if sample.query(left_indices):
+                result.update(find_positives(left_indices))
+            if sample.query(right_indices):
+                result.update(find_positives(right_indices))
+            
+            return result
+        
+        return find_positives(list(range(self.n)))
+
